@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
+from utils.analyzer import analyze_resume
 
 app = Flask(__name__)
 
@@ -40,7 +41,7 @@ def analyze():
     file.save(filepath)
 
         # Placeholder data. Your teammates' AI code will replace this later.
-    score = 75
+    score = 40
     suggestions = [
         "Add a short professional summary at the top.",
         "List your projects with the technologies used.",
@@ -48,11 +49,13 @@ def analyze():
         "Add links to GitHub and LinkedIn.",
     ]
 
+    result = analyze_resume(filepath)
+
     return render_template(
         "result.html",
         filename=filename,
-        score=score,
-        suggestions=suggestions,
+        score=result["score"],
+        suggestions=result["suggestions"],
     )
 
 if __name__ == "__main__":
