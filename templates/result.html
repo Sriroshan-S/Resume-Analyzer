@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analysis Result</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Analysis Result</h1>
+      <p class="subtitle">File: {{ filename }}</p>
+
+      <div class="score-box"><span class="score">{{ score }}</span>/100</div>
+
+      <h2>Suggestions</h2>
+      <ul class="suggestions">
+        {% for item in suggestions %}
+        <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      {% if score >= 70 %}
+      <p class="good">Great job! Your resume is in good shape.</p>
+      {% else %}
+      <p class="warn">Your resume needs some improvement.</p>
+      {% endif %}
+
+      <a href="/" class="back-link">Analyze another resume</a>
+    </div>
+  </body>
+</html>

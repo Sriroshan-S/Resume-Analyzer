@@ -39,8 +39,21 @@ def analyze():
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     file.save(filepath)
 
-    return f"Success! Your file '{filename}' was uploaded."
+        # Placeholder data. Your teammates' AI code will replace this later.
+    score = 75
+    suggestions = [
+        "Add a short professional summary at the top.",
+        "List your projects with the technologies used.",
+        "Include measurable achievements.",
+        "Add links to GitHub and LinkedIn.",
+    ]
 
+    return render_template(
+        "result.html",
+        filename=filename,
+        score=score,
+        suggestions=suggestions,
+    )
 
 if __name__ == "__main__":
     app.run(debug=True)
