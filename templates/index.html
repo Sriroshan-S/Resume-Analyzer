@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer & Career Coach</title>
+</head>
+<body>
+    <h1>AI Resume Analyzer & Career Coach</h1>
+    <p>Upload your resume and get instant feedback.</p>
+
+    <form action="/analyze" method="POST" enctype="multipart/form-data">
+        <label for="resume">Choose your resume (PDF):</label>
+        <br>
+        <input type="file" id="resume" name="resume" accept=".pdf" required>
+        <br>
+        <button type="submit">Analyze Resume</button>
+    </form>
+</body>
+</html>
