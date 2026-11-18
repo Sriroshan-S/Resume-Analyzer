@@ -1,4 +1,4 @@
-from utils.resume_parser import extract_text_from_pdf
+from utils.resume_parser import extract_text_from_pdf, clean_text
 from utils.ats_score import calculate_ats_score
 from utils.career import recommend_careers
 
@@ -34,7 +34,7 @@ def build_suggestions(breakdown):
 
 def analyze_resume(filepath):
     """Analyze a resume PDF and return score, suggestions and career matches."""
-    text = extract_text_from_pdf(filepath)
+    text = clean_text(extract_text_from_pdf(filepath))
     result = calculate_ats_score(text)
     careers = recommend_careers(result["skills_found"])
 

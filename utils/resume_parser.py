@@ -21,6 +21,15 @@ def extract_text_from_pdf(file_path):
 
     return text.strip()
 
+def clean_text(text):
+    """Remove odd symbols and extra spaces from resume text."""
+    cleaned = ""
+    for char in text:
+        if char.isprintable() or char == "\n":
+            cleaned += char
+    lines = [line.strip() for line in cleaned.split("\n")]
+    return "\n".join(line for line in lines if line)
+
 
 if __name__ == "__main__":
-    print(extract_text_from_pdf("sample_resume.pdf"))
+    print(clean_text(extract_text_from_pdf("sample_resume.pdf")))
