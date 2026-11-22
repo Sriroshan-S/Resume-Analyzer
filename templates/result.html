@@ -1,35 +1,108 @@
-<!doctype html>
+<!doctype<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analysis Result</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='style.css') }}"
     />
   </head>
   <body>
-    <div class="container">
-      <h1>Analysis Result</h1>
-      <p class="subtitle">File: {{ filename }}</p>
+    <div class="cards-wrapper">
+      <!-- TOP BANNER CARD (Spans Full Width): ATS Score & Status -->
+      <div class="container result-card full-span">
+        <h1>Analysis Result</h1>
+        <p class="subtitle">File: {{ filename }}</p>
 
-      <div class="score-box"><span class="score">{{ score }}</span>/100</div>
+        <div class="score-box" id="score-box" data-score="{{ score }}" style="--pct: {{ score }}">
+          <span class="score">{{ score }}</span>/100
+        </div>
 
-      <h2>Suggestions</h2>
-      <ul class="suggestions">
-        {% for item in suggestions %}
-        <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
+        {% if score >= 70 %}
+        <p class="good">Great job! Your resume is in good shape.</p>
+        {% else %}
+        <p class="warn">Your resume needs some improvement.</p>
+        {% endif %}
+      </div>
 
-      {% if score >= 70 %}
-      <p class="good">Great job! Your resume is in good shape.</p>
-      {% else %}
-      <p class="warn">Your resume needs some improvement.</p>
+      <!-- Professional Summary -->
+      {% if summary %}
+      <div class="container result-card">
+        <h2>✨ Professional Summary</h2>
+        <div class="summary-box">
+          <p>{{ summary }}</p>
+        </div>
+      </div>
       {% endif %}
 
-      <a href="/" class="back-link">Analyze another resume</a>
+      <!-- Suggestions -->
+      <div class="container result-card">
+        <h2>💡 Suggestions</h2>
+        <ul class="suggestions">
+          {% for item in suggestions %}
+          <li>{{ item }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Career Roadmap -->
+      {% if roadmap %}
+      <div class="container result-card">
+        <h2>🚀 Career Roadmap</h2>
+        <ul class="suggestions roadmap-list">
+          {% for step in roadmap %}
+          <li>{{ step }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <!-- Practice Interview Questions -->
+      {% if interview_questions %}
+      <div class="container result-card">
+        <h2>🎤 Practice Interview Questions</h2>
+        <ol class="questions-list">
+          {% for question in interview_questions %}
+          <li>{{ question }}</li>
+          {% endfor %}
+        </ol>
+      </div>
+      {% endif %}
+
+      <!-- BOTTOM BUTTON CARD (Spans Full Width) -->
+      <div class="container result-card action-card full-span">
+        <a href="/" class="back-link">Analyze another resume</a>
+      </div>
     </div>
+
+    <script>
+      // Fill the score ring from 0 up to the real score
+      (function () {
+        const box = document.getElementById("score-box");
+        if (!box) return;
+
+        const target = Math.max(0, Math.min(100, parseFloat(box.dataset.score) || 0));
+        const duration = 1400; // ms
+        const start = performance.now();
+
+        box.style.setProperty("--pct", 0);
+
+        function tick(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3); // ease-out
+          box.style.setProperty("--pct", (target * eased).toFixed(2));
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      })();
+    </script>
   </body>
 </html>
