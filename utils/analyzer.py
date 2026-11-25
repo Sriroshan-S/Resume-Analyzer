@@ -43,5 +43,5 @@ def analyze_resume(filepath):
         "suggestions": build_suggestions(result["breakdown"]),
         "breakdown": result["breakdown"],
         "skills_found": result["skills_found"],
-        "careers": careers[:3],
+        "careers": careers,
     }

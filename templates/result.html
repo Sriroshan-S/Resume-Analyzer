@@ -77,28 +77,6 @@
       </div>
       {% endif %}
 
-      <!-- Copy & Paste AI Skill-Building Prompt -->
-      {% if skill_prompt %}
-      <div class="container result-card full-span">
-        <h2>&#129302; Copy &amp; Paste AI Skill-Building Prompt</h2>
-        <p class="subtitle">
-          Paste this prompt into any AI assistant to get a guided learning plan, project ideas, and practice steps.
-        </p>
-        <textarea
-          id="skill-prompt-box"
-          class="prompt-box"
-          rows="11"
-          readonly
-        >{{ skill_prompt }}</textarea>
-        <div class="prompt-actions">
-          <button type="button" id="copy-prompt-btn" onclick="copySkillPrompt()">
-            Copy Prompt
-          </button>
-          <span id="copy-status" class="copy-status" aria-live="polite"></span>
-        </div>
-      </div>
-      {% endif %}
-
       <!-- BOTTOM BUTTON CARD (Spans Full Width) -->
       <div class="container result-card action-card full-span">
         <a href="/" class="back-link">Analyze another resume</a>
@@ -153,6 +131,21 @@
           showCopied();
         }
       };
+    </script>
+    <script>
+      const select = document.getElementById("careerSelect");
+      const box = document.getElementById("careerResult");
+      if (select) {
+        const careerData = JSON.parse(select.dataset.careers);
+        select.addEventListener("change", function () {
+          if (this.value === "") { box.style.display = "none"; return; }
+          const c = careerData[this.value];
+          document.getElementById("cMatch").textContent = c.match_percent;
+          document.getElementById("cMatched").textContent = c.matched_skills.join(", ") || "None";
+          document.getElementById("cMissing").textContent = c.missing_skills.join(", ") || "None";
+          box.style.display = "block";
+        });
+      }
     </script>
   </body>
 </html>
