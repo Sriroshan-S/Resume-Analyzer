@@ -39,6 +39,8 @@ def test_analyze_accepts_pdf(client):
 
 
 def test_analyzer_returns_valid_result():
-    result = analyze_resume("anything.pdf")
+    import os
+    pdf_path = os.path.join(os.path.dirname(__file__), "sample_resume.pdf")
+    result = analyze_resume(pdf_path)
     assert 0 <= result["score"] <= 100
     assert isinstance(result["suggestions"], list)
