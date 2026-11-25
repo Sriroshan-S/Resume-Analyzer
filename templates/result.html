@@ -95,22 +95,6 @@
             Copy Prompt
           </button>
           <span id="copy-status" class="copy-status" aria-live="polite"></span>
-      <!-- Career Match Dropdown -->
-      {% if careers %}
-      <div class="container result-card">
-        <h2>🎯 Career Match</h2>
-        <label for="careerSelect">Choose a career:</label>
-        <select id="careerSelect" data-careers='{{ careers | tojson }}' style="width:100%; padding:10px; margin-top:8px; border-radius:8px; font-family:inherit;">
-          <option value="">-- Select a career --</option>
-          {% for c in careers %}
-          <option value="{{ loop.index0 }}">{{ c.career }}</option>
-          {% endfor %}
-        </select>
-
-        <div id="careerResult" style="display:none; margin-top:14px;">
-          <p><strong>Match:</strong> <span id="cMatch"></span>%</p>
-          <p><strong>Skills you have:</strong> <span id="cMatched"></span></p>
-          <p><strong>Skills missing:</strong> <span id="cMissing"></span></p>
         </div>
       </div>
       {% endif %}
@@ -169,21 +153,6 @@
           showCopied();
         }
       };
-    </script>
-    <script>
-      const select = document.getElementById("careerSelect");
-      const box = document.getElementById("careerResult");
-      if (select) {
-        const careerData = JSON.parse(select.dataset.careers);
-        select.addEventListener("change", function () {
-          if (this.value === "") { box.style.display = "none"; return; }
-          const c = careerData[this.value];
-          document.getElementById("cMatch").textContent = c.match_percent;
-          document.getElementById("cMatched").textContent = c.matched_skills.join(", ") || "None";
-          document.getElementById("cMissing").textContent = c.missing_skills.join(", ") || "None";
-          box.style.display = "block";
-        });
-      }
     </script>
   </body>
 </html>
