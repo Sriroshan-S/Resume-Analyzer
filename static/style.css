@@ -152,6 +152,10 @@ h2 {
   color: #fff;
 }
 
+.full-span h2 {
+  justify-content: center;
+}
+
 .subtitle {
   margin-top: 10px;
   color: var(--muted);
@@ -362,6 +366,7 @@ button.loading {
 .result-card:nth-child(4) { animation-delay: 0.24s; }
 .result-card:nth-child(5) { animation-delay: 0.32s; }
 .result-card:nth-child(6) { animation-delay: 0.4s; }
+.result-card:nth-child(7) { animation-delay: 0.48s; }
 
 /* ---------- Score ring ---------- */
 .score-box {
@@ -437,6 +442,43 @@ button.loading {
   border-left: 4px solid #8b5cf6;
   background: rgba(255, 255, 255, 0.06);
   line-height: 1.75;
+}
+
+/* ---------- Skill-building prompt box ---------- */
+.prompt-box {
+  width: 100%;
+  margin-top: 20px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(10, 10, 35, 0.55);
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  text-align: left;
+  resize: vertical;
+}
+
+.prompt-box:focus {
+  outline: none;
+  border-color: #22d3ee;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.2);
+}
+
+.prompt-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.copy-status {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #6ee7b7;
 }
 
 /* ---------- Suggestions ---------- */
