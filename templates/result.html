@@ -36,7 +36,7 @@
       <!-- Professional Summary -->
       {% if summary %}
       <div class="container result-card">
-        <h2>✨ Professional Summary</h2>
+        <h2>&#10024; Professional Summary</h2>
         <div class="summary-box">
           <p>{{ summary }}</p>
         </div>
@@ -45,7 +45,7 @@
 
       <!-- Suggestions -->
       <div class="container result-card">
-        <h2>💡 Suggestions</h2>
+        <h2>&#128161; Suggestions</h2>
         <ul class="suggestions">
           {% for item in suggestions %}
           <li>{{ item }}</li>
@@ -56,7 +56,7 @@
       <!-- Career Roadmap -->
       {% if roadmap %}
       <div class="container result-card">
-        <h2>🚀 Career Roadmap</h2>
+        <h2>&#128640; Career Roadmap</h2>
         <ul class="suggestions roadmap-list">
           {% for step in roadmap %}
           <li>{{ step }}</li>
@@ -68,7 +68,7 @@
       <!-- Practice Interview Questions -->
       {% if interview_questions %}
       <div class="container result-card">
-        <h2>🎤 Practice Interview Questions</h2>
+        <h2>&#127919; Practice Interview Questions</h2>
         <ol class="questions-list">
           {% for question in interview_questions %}
           <li>{{ question }}</li>
@@ -77,22 +77,24 @@
       </div>
       {% endif %}
 
-      <!-- Career Match Dropdown -->
-      {% if careers %}
-      <div class="container result-card">
-        <h2>🎯 Career Match</h2>
-        <label for="careerSelect">Choose a career:</label>
-        <select id="careerSelect" data-careers='{{ careers | tojson }}' style="width:100%; padding:10px; margin-top:8px; border-radius:8px; font-family:inherit;">
-          <option value="">-- Select a career --</option>
-          {% for c in careers %}
-          <option value="{{ loop.index0 }}">{{ c.career }}</option>
-          {% endfor %}
-        </select>
-
-        <div id="careerResult" style="display:none; margin-top:14px;">
-          <p><strong>Match:</strong> <span id="cMatch"></span>%</p>
-          <p><strong>Skills you have:</strong> <span id="cMatched"></span></p>
-          <p><strong>Skills missing:</strong> <span id="cMissing"></span></p>
+      <!-- Copy & Paste AI Skill-Building Prompt -->
+      {% if skill_prompt %}
+      <div class="container result-card full-span">
+        <h2>&#129302; Copy &amp; Paste AI Skill-Building Prompt</h2>
+        <p class="subtitle">
+          Paste this prompt into any AI assistant to get a guided learning plan, project ideas, and practice steps.
+        </p>
+        <textarea
+          id="skill-prompt-box"
+          class="prompt-box"
+          rows="11"
+          readonly
+        >{{ skill_prompt }}</textarea>
+        <div class="prompt-actions">
+          <button type="button" id="copy-prompt-btn" onclick="copySkillPrompt()">
+            Copy Prompt
+          </button>
+          <span id="copy-status" class="copy-status" aria-live="polite"></span>
         </div>
       </div>
       {% endif %}
@@ -123,21 +125,34 @@
         }
         requestAnimationFrame(tick);
       })();
-    </script>
-    <script>
-      const select = document.getElementById("careerSelect");
-      const box = document.getElementById("careerResult");
-      if (select) {
-        const careerData = JSON.parse(select.dataset.careers);
-        select.addEventListener("change", function () {
-          if (this.value === "") { box.style.display = "none"; return; }
-          const c = careerData[this.value];
-          document.getElementById("cMatch").textContent = c.match_percent;
-          document.getElementById("cMatched").textContent = c.matched_skills.join(", ") || "None";
-          document.getElementById("cMissing").textContent = c.missing_skills.join(", ") || "None";
-          box.style.display = "block";
-        });
-      }
+
+      // Copy the AI skill-building prompt to clipboard
+      window.copySkillPrompt = function () {
+        const box = document.getElementById("skill-prompt-box");
+        const status = document.getElementById("copy-status");
+        if (!box) return;
+
+        const showCopied = () => {
+          if (status) {
+            status.textContent = "Copied to clipboard!";
+            setTimeout(() => {
+              status.textContent = "";
+            }, 2500);
+          }
+        };
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(box.value).then(showCopied).catch(() => {
+            box.select();
+            document.execCommand("copy");
+            showCopied();
+          });
+        } else {
+          box.select();
+          document.execCommand("copy");
+          showCopied();
+        }
+      };
     </script>
   </body>
 </html>

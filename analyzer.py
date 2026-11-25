@@ -1,1 +1,0 @@
-from utils.ai_analyzer import analyze_resume

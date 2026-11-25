@@ -58,6 +58,7 @@ def analyze():
         summary=result.get("summary", ""),
         roadmap=result.get("roadmap", []),
         interview_questions=result.get("interview_questions", []),
+        skill_prompt=result.get("skill_prompt", ""),
         careers=careers,
     )
 
