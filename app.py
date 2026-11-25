@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request
 from werkzeug.utils import secure_filename
 from utils.ai_analyzer import analyze_resume
+from utils.analyzer import analyze_resume as local_analyze
 
 app = Flask(__name__)
 
@@ -34,9 +35,15 @@ def analyze():
     filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
     file.save(filepath)
 
+    careers = []
     try:
         # Call your teammate's analyzer function
         result = analyze_resume(filepath) or {}
+        # Career matches from our own resume-processing code
+        try:
+            careers = local_analyze(filepath)["careers"]
+        except Exception:
+            careers = []
     finally:
         # Remove the temporary uploaded file after analysis (even if it fails)
         if os.path.exists(filepath):
@@ -51,6 +58,7 @@ def analyze():
         summary=result.get("summary", ""),
         roadmap=result.get("roadmap", []),
         interview_questions=result.get("interview_questions", []),
+        careers=careers,
     )
 
 
