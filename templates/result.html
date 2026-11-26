@@ -79,9 +79,11 @@
 
       
       <!-- Career Match Dropdown -->
-      {% if careers %}
-      <div class="container result-card full-span">
+       <div class="container result-card full-span">
         <h2>🎯 Career Match</h2>
+        {% if not careers %}
+        <p>Career match is unavailable for this resume. Please try again.</p>
+        {% else %}
         <label for="careerSelect">Choose a career:</label>
         <select id="careerSelect" data-careers='{{ careers | tojson }}' style="width:100%; padding:10px; margin-top:8px; border-radius:8px; font-family:inherit;">
           <option value="">-- Select a career --</option>
@@ -95,8 +97,9 @@
           <p><strong>Skills you have:</strong> <span id="cMatched"></span></p>
           <p><strong>Skills missing:</strong> <span id="cMissing"></span></p>
         </div>
+        {% endif %}
       </div>
-      {% endif %}
+      
 
       <!-- Copy & Paste AI Skill-Building Prompt -->
       {% if skill_prompt %}

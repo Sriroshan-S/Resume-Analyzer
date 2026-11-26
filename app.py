@@ -43,6 +43,8 @@ def analyze():
         try:
             careers = local_analyze(filepath)["careers"]
         except Exception:
+            import traceback
+            traceback.print_exc()
             careers = []
     finally:
         # Remove the temporary uploaded file after analysis (even if it fails)
